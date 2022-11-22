@@ -20,7 +20,6 @@ jobs:
         run: eslint . --ext .js,.jsx,.ts,.tsx
 
       - name: Create Pull Request
-        if: steps.action_black.outputs.is_formatted == 'true'
         uses: peter-evans/create-pull-request@v3
         with: 
            token: ${{ secrets.GITHUB_TOKEN }}
