@@ -1,0 +1,32 @@
+name: React Linter and Code Analyser Continuous Integration
+
+# This action works with pull requests and pushes
+on: [push, pull_request]
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Install modules
+        run: yarn
+      
+      - name: Run ESLint
+        run: eslint . --ext .js,.jsx,.ts,.tsx
+
+      - name: Create Pull Request
+         if: steps.action_black.outputs.is_formatted == 'true'
+         uses: peter-evans/create-pull-request@v3
+         with: 
+           token: ${{ secrets.GITHUB_TOKEN }}
+           title: "Linting And Code Analyser"
+           commit-message: ":art: Analyse and Lint React code with ESlint"
+           body: |
+             Linter for React
+           base: ${{ github.head_ref }} # Creates pull request onto pull request or commit branch
+           branch: actions/Lint
