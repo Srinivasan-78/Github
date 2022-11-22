@@ -18,14 +18,14 @@ jobs:
         with:
           prettier_options: --write **/*.{js,md}
 
-       - name: Create Pull Request
-         if: steps.action_black.outputs.is_formatted == 'true'
-         uses: peter-evans/create-pull-request@v3
-         with: 
+      - name: Create Pull Request
+        if: steps.action_black.outputs.is_formatted == 'true'
+        uses: peter-evans/create-pull-request@v3
+        with: 
            token: ${{ secrets.GITHUB_TOKEN }}
-           title: "Format React code After lint"
+           title: "Format React code"
            commit-message: ":art: Format React code with Prettify"
            body: |
              Linter for React
            base: ${{ github.head_ref }} # Creates pull request onto pull request or commit branch
-           branch: actions/Lint
+           branch: actions/React_Prettify
