@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   linter_name:
-    name: runner / black
+    name: Python Black
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
