@@ -20,6 +20,17 @@ jobs:
         uses: github/super-linter@v4
         env:
           VALIDATE_ALL_CODEBASE: false
-          # Change to 'master' if your main branch differs
+          # Change to 'specific branch name' if your main branch differs
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with: 
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: "Linting And Code Analyser"
+          commit-message: ":art: Analyse and Lint code with Super-linter"
+          body: |
+            Linting has been complete with the changes applied.
+          base: ${{ github.head_ref }} # Creates pull request onto pull request or commit branch
+          branch: actions/Lint
