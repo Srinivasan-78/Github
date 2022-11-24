@@ -1,0 +1,24 @@
+name: cs Formatter Continuous Integration
+
+on: [push, pull_request]
+
+jobs:
+  linter_name:
+    name: cs Dotnet-Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Check files using the Dotnet formatter
+        run: dotnet format
+      
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: "Format cs code"
+          commit-message: ":art: Format cs code with dotnet-format"
+          body: |
+            There appear to be some cs formatting errors in ${{ github.sha }}.
+          base: ${{ github.head_ref }} # Creates pull request onto pull request or commit branch
+          branch: actions/cs_dotnet-format
